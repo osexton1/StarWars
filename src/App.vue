@@ -4,8 +4,8 @@
         <table>
             <tr>
                 <th>Name</th>
-                <th>Height</th>
-                <th>Mass</th>
+                <th>Height (cm)</th>
+                <th>Mass (kg)</th>
                 <th>Created</th>
                 <th>Edited</th>
                 <th>Planet Name</th>
@@ -61,7 +61,6 @@
     table {
         font-family: 'Pathway Gothic One', sans-serif;
         margin: auto;
-        border: 2px solid black;
         border-collapse: collapse;
         width: 80%;
         text-align: center;
@@ -76,6 +75,7 @@
     input {
         font-family: 'Pathway Gothic One', sans-serif;
         background-color: transparent;
+        border: 0;
         color: #feda4a;
         width: 75%;
         margin: 1em;
@@ -85,6 +85,11 @@
     div {
         text-align: center;
         margin: auto;
+    }
+
+    ::placeholder {
+        color: #feda4a;
+        opacity: 0.75;
     }
 
 </style>
