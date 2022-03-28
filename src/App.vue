@@ -42,8 +42,7 @@
                     this.characters = this.characters.concat(response.data.results);
                     const nextPage = response.data.next;
                     this.fetchCharacters_(nextPage);
-                })
-                console.log(url);
+                });
                 }
             }
         },
@@ -56,10 +55,10 @@
 
 <style scoped>
     table {
-        margin: 1;
+        margin: auto;
         border: 2px solid black;
         border-collapse: collapse;
-        width: 100%;
+        width: 80%;
         text-align: center;
     }
 
@@ -67,4 +66,5 @@
         margin: 1em;
         border: 2px solid black;
     }
+
 </style>
