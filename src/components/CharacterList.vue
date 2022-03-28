@@ -16,7 +16,7 @@
             CharacterListItem
         },
         props: {
-            characters: Object
+            characters: Array
         }
     }
 </script>
