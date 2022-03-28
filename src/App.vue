@@ -26,14 +26,26 @@
             CharacterList
         },
         data() {
-            return { characters: {} }
+            return { characters: [] }
         },
         methods: {
             async fetchCharacters() {
                 axios.get(`${ROOT_URL}/people`).then(response => {
                     this.characters = response.data.results;
+                    const nextPage = response.data.next;
+                    this.fetchCharacters_(nextPage);
                 });
             },
+            async fetchCharacters_(url) {
+                if (url) {
+                axios.get(url).then(response => {
+                    this.characters = this.characters.concat(response.data.results);
+                    const nextPage = response.data.next;
+                    this.fetchCharacters_(nextPage);
+                })
+                console.log(url);
+                }
+            }
         },
         created() {
             this.fetchCharacters();
@@ -44,10 +56,10 @@
 
 <style scoped>
     table {
-        margin: 1em;
+        margin: 1;
         border: 2px solid black;
         border-collapse: collapse;
-        width: 80%;
+        width: 100%;
         text-align: center;
     }
 
