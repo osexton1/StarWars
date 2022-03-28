@@ -1,5 +1,6 @@
 <template>
     <div>
+        <input id="charName" @input="onInput" placeholder="Enter a name to search for in here..."/>
         <table>
             <tr>
                 <th>Name</th>
@@ -9,7 +10,7 @@
                 <th>Edited</th>
                 <th>Planet Name</th>
             </tr>
-            <CharacterList :characters="characters"></CharacterList>
+            <CharacterList :textInput="textInput" :characters="characters"></CharacterList>
         </table>
     </div>
 </template>
@@ -23,10 +24,10 @@
     export default {
         name: 'App',
         components: {
-            CharacterList
+            CharacterList,
         },
         data() {
-            return { characters: [] }
+            return { characters: [], textInput: "" }
         },
         methods: {
             async fetchCharacters() {
@@ -44,6 +45,9 @@
                     this.fetchCharacters_(nextPage);
                 });
                 }
+            },
+            onInput() {
+                this.textInput = document.getElementById('charName').value;
             }
         },
         created() {
@@ -65,6 +69,17 @@
     th {
         margin: 1em;
         border: 2px solid black;
+    }
+
+    input {
+        width: 75%;
+        margin: auto;
+        text-align: center;
+    }
+
+    div {
+        text-align: center;
+        margin: auto;
     }
 
 </style>

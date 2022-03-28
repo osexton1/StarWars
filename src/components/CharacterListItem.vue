@@ -1,5 +1,5 @@
 <template>
-    <tr>
+    <tr v-if="character.name.toLowerCase().includes(textInput.toLowerCase())">
         <td>{{ character.name }}</td>
         <td>{{ character.height }}</td>
         <td>{{ character.mass }}</td>
@@ -18,7 +18,8 @@
             return { homeworld: "" }
         },
         props: {
-            character: Object
+            character: Object,
+            textInput: String
         },
         methods: {
             async getPlanetName() {

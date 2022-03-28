@@ -3,6 +3,7 @@
     v-for="character in characters"
     :key="character.name"
     :character="character"
+    :textInput="textInput"
     >
     </CharacterListItem>
 </template>
@@ -16,7 +17,8 @@
             CharacterListItem
         },
         props: {
-            characters: Array
+            characters: Array,
+            textInput: String
         }
     }
 </script>
