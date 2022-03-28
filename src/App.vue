@@ -73,7 +73,7 @@
 
     input {
         width: 75%;
-        margin: auto;
+        margin: 1em;
         text-align: center;
     }
 
