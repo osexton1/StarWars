@@ -1,24 +1,22 @@
 <template>
-    <tr>
-        <td>Luke</td>
-        <td>1.8m</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+    <CharacterListItem
+    v-for="character in characters"
+    :key="character.name"
+    :character="character"
+    >
+    </CharacterListItem>
 </template>
 
 <script>
+    import CharacterListItem from './CharacterListItem';
 
     export default {
-        name: 'CharacterList'
+        name: 'CharacterList',
+        components: {
+            CharacterListItem
+        },
+        props: {
+            characters: Object
+        }
     }
 </script>
-
-<style scoped>
-    td {
-        margin: 1em;
-        border: 2px solid black;
-    }
-</style>
