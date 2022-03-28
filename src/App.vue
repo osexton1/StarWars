@@ -59,6 +59,7 @@
 
 <style scoped>
     table {
+        font-family: 'Pathway Gothic One', sans-serif;
         margin: auto;
         border: 2px solid black;
         border-collapse: collapse;
@@ -67,11 +68,15 @@
     }
 
     th {
+        color: #feda4a;
         margin: 1em;
-        border: 2px solid black;
+        padding: 0.5em;
     }
 
     input {
+        font-family: 'Pathway Gothic One', sans-serif;
+        background-color: transparent;
+        color: #feda4a;
         width: 75%;
         margin: 1em;
         text-align: center;

@@ -22,10 +22,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-    tr:nth-child(even) {
-        background-color: #a79f9f;
-    }
-</style>

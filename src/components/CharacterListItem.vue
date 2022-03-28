@@ -36,7 +36,9 @@
 
 <style scoped>
     td {
-        margin: 1em;
-        border: 2px solid black;
+        font-family: 'Pathway Gothic One', sans-serif;
+        color: #feda4a;
+        margin: 2em;
+        padding: 0.5em;
     }
 </style>
