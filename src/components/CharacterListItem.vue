@@ -19,10 +19,7 @@
         props: {
             character: Object,
             textInput: String
-        },
-        // created() {
-        //     this.getPlanetName()
-        // }
+        }
     }
 </script>
 
