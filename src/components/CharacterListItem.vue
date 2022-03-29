@@ -5,12 +5,11 @@
         <td>{{ character.mass }}</td>
         <td>{{ character.created }}</td>
         <td>{{ character.edited }}</td>
-        <td>{{ this.homeworld }}</td>
+        <td>{{ character.homeworld }}</td>
     </tr>
 </template>
 
 <script>
-    import axios from 'axios';
 
     export default {
         name: 'CharacterListItem',
@@ -21,16 +20,9 @@
             character: Object,
             textInput: String
         },
-        methods: {
-            async getPlanetName() {
-                axios.get(this.character.homeworld).then(response => {
-                    this.homeworld = response.data.name;
-                });
-            }
-        },
-        created() {
-            this.getPlanetName()
-        }
+        // created() {
+        //     this.getPlanetName()
+        // }
     }
 </script>
 
