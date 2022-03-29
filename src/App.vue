@@ -3,14 +3,14 @@
         <input id="charName" @input="onInput" placeholder="Enter a name to search for in here..."/>
         <table>
             <tr>
-                <th>Name</th>
-                <th>Height (cm)</th>
-                <th>Mass (kg)</th>
-                <th>Created</th>
-                <th>Edited</th>
-                <th>Planet Name</th>
+                <th @click="sort('name')">Name</th>
+                <th @click="sort('height')">Height (cm)</th>
+                <th @click="sort('mass')">Mass (kg)</th>
+                <th @click="sort('created')">Created</th>
+                <th @click="sort('edited')">Edited</th>
+                <th @click="sort('homeworld')">Planet Name</th>
             </tr>
-            <CharacterList :textInput="textInput" :characters="characters"></CharacterList>
+            <CharacterList :textInput="textInput" :characters="sortedTable"></CharacterList>
         </table>
     </div>
 </template>
@@ -27,7 +27,7 @@
             CharacterList,
         },
         data() {
-            return { characters: [], textInput: "" }
+            return { characters: [], textInput: "", currentSort: "created", currentSortDir: "asc" }
         },
         methods: {
             async fetchCharacters() {
@@ -39,15 +39,52 @@
             },
             async fetchCharacters_(url) {
                 if (url) {
-                axios.get(url).then(response => {
-                    this.characters = this.characters.concat(response.data.results);
-                    const nextPage = response.data.next;
-                    this.fetchCharacters_(nextPage);
-                });
+                    axios.get(url).then(response => {
+                        this.characters = this.characters.concat(response.data.results);
+                        const nextPage = response.data.next;
+                        this.fetchCharacters_(nextPage);
+                    });
+                } else {
+                    this.fetchPlanet();
                 }
             },
             onInput() {
                 this.textInput = document.getElementById('charName').value;
+            },
+            sort(column) {
+                if (column === this.currentSort) {
+                    this.currentSortDir = this.currentSortDir==="asc"?"desc":"asc";
+                }
+                this.currentSort = column;
+            },
+            async fetchPlanet() {
+                for (let char in this.characters) {
+                    axios.get(this.characters[char].homeworld).then(response => {
+                        this.characters[char].homeworld = response.data.name;
+                    })
+                }
+            }
+        },
+        computed: {
+            sortedTable() {
+                return this.characters.slice().sort((a,b) => {
+                    const numbers = ['height', 'mass'];
+                    let modifier = 1;
+                    if (this.currentSortDir === "desc") modifier = -1;
+                    if (numbers.includes(this.currentSort)) {
+                        if (a[this.currentSort] === 'unknown') {
+                            return -1 * modifier;
+                        }
+                        if (b[this.currentSort] === 'unknown') {
+                            return 1 * modifier;
+                        }
+                        return (parseInt(a[this.currentSort].replace(',','')) - parseInt(b[this.currentSort].replace(',',''))) * modifier;
+                    } else {
+                        if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+                        if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+                        return 0;
+                    }
+                });
             }
         },
         created() {
