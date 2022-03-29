@@ -3,8 +3,8 @@
         <td>{{ character.name }}</td>
         <td>{{ character.height }}</td>
         <td>{{ character.mass }}</td>
-        <td>{{ character.created }}</td>
-        <td>{{ character.edited }}</td>
+        <td>{{ formatDate(character.created) }}</td>
+        <td>{{ formatDate(character.edited) }}</td>
         <td>{{ character.homeworld }}</td>
     </tr>
 </template>
@@ -19,6 +19,21 @@
         props: {
             character: Object,
             textInput: String
+        },
+        methods: {
+            formatDate(entryDate) {
+                const date = new Date(entryDate);
+                const dmyFormat = date.toDateString();
+                let hour = date.getUTCHours();
+                let minutes = date.getMinutes();
+                if (hour < 10) {
+                    hour = "0" + hour.toString();
+                }
+                if (minutes < 10) {
+                    minutes = "0" + minutes.toString();
+                }
+                return dmyFormat + " @ " + hour + ":" + minutes;
+            }
         }
     }
 </script>
