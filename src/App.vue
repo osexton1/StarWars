@@ -1,5 +1,11 @@
 <template>
     <div>
+        <h1 v-if="currentPage < 1">
+            All Star Wars Characters
+        </h1>
+        <h1 v-else>
+            Star Wars Characters
+        </h1>
         <input id="charName" @input="onInput" placeholder="Enter a name to search for in here..."/>
         <table>
             <tr>
@@ -12,6 +18,17 @@
             </tr>
             <CharacterList :textInput="textInput" :characters="sortedTable"></CharacterList>
         </table>
+        <p v-if="currentPage < 1">
+            <button @click="nextPage">Next</button>
+        </p>
+        <p v-else-if="currentPage > 8">
+            <button @click="prevPage">Previous</button>
+        </p>
+        <p v-else>
+            <button @click="prevPage">Previous</button>
+            |
+            <button @click="nextPage">Next</button>
+        </p>
     </div>
 </template>
 
@@ -27,7 +44,8 @@
             CharacterList,
         },
         data() {
-            return { characters: [], textInput: "", currentSort: "created", currentSortDir: "asc" }
+            return { characters: [], textInput: "", currentSort: "created", currentSortDir: "asc",
+                     pageSize: 10, currentPage: 0 }
         },
         methods: {
             async fetchCharacters() {
@@ -63,6 +81,14 @@
                         this.characters[char].homeworld = response.data.name;
                     })
                 }
+            },
+            nextPage() {
+                this.currentPage += 1;
+                console.log(this.currentPage);
+            },
+            prevPage() {
+                this.currentPage -= 1;
+                console.log(this.currentPage);
             }
         },
         computed: {
@@ -84,6 +110,14 @@
                         if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
                         return 0;
                     }
+                }).filter((row, index) => {
+                    if (this.currentPage < 1) {
+                        return true;
+                    } else {
+                        let start = (this.currentPage-1) * this.pageSize;
+                        let end = this.currentPage * this.pageSize;
+                        if (index >= start && index < end) return true;
+                    }
                 });
             }
         },
@@ -95,8 +129,12 @@
 </script>
 
 <style scoped>
-    table {
+    * {
+        color: #feda4a;
         font-family: 'Pathway Gothic One', sans-serif;
+    }
+
+    table {
         margin: auto;
         border-collapse: collapse;
         width: 80%;
@@ -104,16 +142,13 @@
     }
 
     th {
-        color: #feda4a;
         margin: 1em;
         padding: 0.5em;
     }
 
     input {
-        font-family: 'Pathway Gothic One', sans-serif;
         background-color: transparent;
         border: 0;
-        color: #feda4a;
         width: 75%;
         margin: 1em;
         text-align: center;
@@ -125,8 +160,14 @@
     }
 
     ::placeholder {
-        color: #feda4a;
         opacity: 0.75;
+    }
+
+    button {
+        background-color: transparent;
+        border: 0;
+        font-weight: bold;
+        font-size: 1.2em;
     }
 
 </style>
