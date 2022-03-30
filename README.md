@@ -1,6 +1,9 @@
 # Star Wars
 
-This repo was used to practice Vue, specifically querying an API ([swapi](https://swapi.dev/)) and displaying the information sent back in a table.
+This repo was used to practice Vue, specifically querying an API ([swapi](https://swapi.dev/)) and displaying the information sent back in a table. This project requires the axios library, so run the following command in the terminal within the project directory to install it. 
+```
+npm install --save axios
+```
 
 ## Credits
 
