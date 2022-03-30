@@ -5,7 +5,7 @@
         <td>{{ character.mass }}</td>
         <td>{{ formatDate(character.created) }}</td>
         <td>{{ formatDate(character.edited) }}</td>
-        <td>{{ character.homeworld }}</td>
+        <td>{{ character.homeworld[1] }}</td>
     </tr>
 </template>
 

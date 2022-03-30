@@ -78,7 +78,7 @@
             async fetchPlanet() {
                 for (let char in this.characters) {
                     axios.get(this.characters[char].homeworld).then(response => {
-                        this.characters[char].homeworld = response.data.name;
+                        this.characters[char].homeworld = [this.characters[char].homeworld, response.data.name];
                     })
                 }
             },
