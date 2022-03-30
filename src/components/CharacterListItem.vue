@@ -42,7 +42,7 @@
     td {
         font-family: 'Pathway Gothic One', sans-serif;
         color: #feda4a;
-        margin: 2em;
+        margin: 1.5em;
         padding: 0.5em;
     }
 </style>
