@@ -26,7 +26,7 @@
         </p>
         <p v-else>
             <button @click="prevPage">Previous</button>
-            |
+            | {{ currentPage }} |
             <button @click="nextPage">Next</button>
         </p>
         <Modal v-show='isModalVisible' @close='closeModal' :planet="planet"/>
@@ -187,6 +187,10 @@
         border: 0;
         font-weight: bold;
         font-size: 1.2em;
+    }
+
+    p {
+        font-weight: bold;
     }
 
 </style>
