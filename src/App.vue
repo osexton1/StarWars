@@ -16,7 +16,7 @@
                 <th @click="sort('edited')">Edited</th>
                 <th @click="sort('homeworld')">Planet Name</th>
             </tr>
-            <CharacterList :textInput="textInput" :characters="sortedTable"></CharacterList>
+            <CharacterList @showModal="showModal($event)" :textInput="textInput" :characters="sortedTable"></CharacterList>
         </table>
         <p v-if="currentPage < 1">
             <button @click="nextPage">Next</button>
@@ -29,11 +29,13 @@
             |
             <button @click="nextPage">Next</button>
         </p>
+        <Modal v-show='isModalVisible' @close='closeModal' :planet="planet"/>
     </div>
 </template>
 
 <script>
     import CharacterList from './components/CharacterList';
+    import Modal from './components/Modal';
     import axios from 'axios';
 
     const ROOT_URL = 'https://swapi.dev/api';
@@ -42,10 +44,11 @@
         name: 'App',
         components: {
             CharacterList,
+            Modal
         },
         data() {
             return { characters: [], textInput: "", currentSort: "created", currentSortDir: "asc",
-                     pageSize: 10, currentPage: 0 }
+                     pageSize: 10, currentPage: 0, isModalVisible: false, planet : "" }
         },
         methods: {
             async fetchCharacters() {
@@ -84,11 +87,16 @@
             },
             nextPage() {
                 this.currentPage += 1;
-                console.log(this.currentPage);
             },
             prevPage() {
                 this.currentPage -= 1;
-                console.log(this.currentPage);
+            },
+            showModal($event) {
+                this.planet = $event;
+                this.isModalVisible = true;
+            },
+            closeModal() {
+                this.isModalVisible = false;
             }
         },
         computed: {
@@ -106,9 +114,15 @@
                         }
                         return (parseInt(a[this.currentSort].replace(',','')) - parseInt(b[this.currentSort].replace(',',''))) * modifier;
                     } else {
-                        if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
-                        if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+                        if (this.currentSort === 'homeworld') {
+                            if (a[this.currentSort][1] < b[this.currentSort][1]) return -1 * modifier;
+                        if (a[this.currentSort][1] > b[this.currentSort][1]) return 1 * modifier;
                         return 0;
+                        } else {
+                            if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+                            if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+                            return 0;
+                        }
                     }
                 }).filter((row, index) => {
                     if (this.currentPage < 1) {
