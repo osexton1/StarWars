@@ -139,9 +139,13 @@
         border-collapse: collapse;
         width: 80%;
         text-align: center;
+        position: relative;
     }
 
     th {
+        background-image: url('../public/SWBackground.jpeg');
+        position: sticky;
+        top: 0;
         margin: 1em;
         padding: 0.5em;
     }
@@ -160,6 +164,7 @@
     }
 
     ::placeholder {
+        color: #feda4a;
         opacity: 0.75;
     }
 
