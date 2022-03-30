@@ -5,7 +5,7 @@
         <td>{{ character.mass }}</td>
         <td>{{ formatDate(character.created) }}</td>
         <td>{{ formatDate(character.edited) }}</td>
-        <td>{{ character.homeworld[1] }}</td>
+        <td @click='openModal(character.name)'>{{ character.homeworld[1] }}</td>
     </tr>
 </template>
 
@@ -33,6 +33,9 @@
                     minutes = "0" + minutes.toString();
                 }
                 return dmyFormat + " @ " + hour + ":" + minutes;
+            },
+            openModal() {
+                this.$emit('openModal', this.character.homeworld[0]);
             }
         }
     }
