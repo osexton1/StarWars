@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 v-if="currentPage < 1">
+        <h1 v-if="currentPage > this.maxPages">
             All Star Wars Characters
         </h1>
         <h1 v-else>
@@ -18,10 +18,10 @@
             </tr>
             <CharacterList @showModal="showModal($event)" :textInput="textInput" :characters="sortedTable"></CharacterList>
         </table>
-        <p v-if="currentPage < 1">
+        <p v-if="currentPage === 1">
             <button @click="nextPage">Next</button>
         </p>
-        <p v-else-if="currentPage > maxPages - 1">
+        <p v-else-if="currentPage > maxPages">
             <button @click="prevPage">Previous</button>
         </p>
         <p v-else>
@@ -48,7 +48,7 @@
         },
         data() {
             return { characters: [], textInput: "", currentSort: "created", currentSortDir: "asc",
-                     pageSize: 10, currentPage: 0, isModalVisible: false, planet : "", maxPages: 0 }
+                     pageSize: 10, currentPage: 1, isModalVisible: false, planet : "", maxPages: 0 }
         },
         methods: {
             async fetchCharacters() {
@@ -127,7 +127,7 @@
                         }
                     }
                 }).filter((row, index) => {
-                    if (this.currentPage < 1) {
+                    if (this.currentPage > this.maxPages) {
                         return true;
                     } else {
                         let start = (this.currentPage-1) * this.pageSize;
@@ -156,6 +156,7 @@
         width: 80%;
         text-align: center;
         position: relative;
+        font-size: 1.25em;
     }
 
     th {
@@ -171,6 +172,7 @@
         border: 0;
         width: 75%;
         margin: 1em;
+        font-size: 1.25em;
         text-align: center;
     }
 
@@ -181,7 +183,7 @@
 
     ::placeholder {
         color: #feda4a;
-        opacity: 0.75;
+        opacity: 0.9;
     }
 
     button {
