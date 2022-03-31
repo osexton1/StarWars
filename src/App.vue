@@ -21,7 +21,7 @@
         <p v-if="currentPage < 1">
             <button @click="nextPage">Next</button>
         </p>
-        <p v-else-if="currentPage > 8">
+        <p v-else-if="currentPage > maxPages - 1">
             <button @click="prevPage">Previous</button>
         </p>
         <p v-else>
@@ -48,12 +48,13 @@
         },
         data() {
             return { characters: [], textInput: "", currentSort: "created", currentSortDir: "asc",
-                     pageSize: 10, currentPage: 0, isModalVisible: false, planet : "" }
+                     pageSize: 10, currentPage: 0, isModalVisible: false, planet : "", maxPages: 0 }
         },
         methods: {
             async fetchCharacters() {
                 axios.get(`${ROOT_URL}/people`).then(response => {
                     this.characters = response.data.results;
+                    this.maxPages = ~~(this.characters.length/10) + 1;
                     const nextPage = response.data.next;
                     this.fetchCharacters_(nextPage);
                 });
@@ -62,6 +63,7 @@
                 if (url) {
                     axios.get(url).then(response => {
                         this.characters = this.characters.concat(response.data.results);
+                        this.maxPages = ~~(this.characters.length/10) + 1;
                         const nextPage = response.data.next;
                         this.fetchCharacters_(nextPage);
                     });
