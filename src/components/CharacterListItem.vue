@@ -5,7 +5,7 @@
         <td>{{ character.mass }}</td>
         <td>{{ formatDate(character.created) }}</td>
         <td>{{ formatDate(character.edited) }}</td>
-        <td @click='openModal(character.name)'>{{ character.homeworld[1] }}</td>
+        <td @click='openModal(character.name)' class="modal">{{ character.homeworld[1] }}</td>
     </tr>
 </template>
 
@@ -47,5 +47,9 @@
         color: #feda4a;
         margin: 1.5em;
         padding: 0.5em;
+    }
+
+    .modal {
+        text-decoration-line: underline;
     }
 </style>
