@@ -1,18 +1,17 @@
 <template>
     <div class="modal-backdrop">
         <div class="modal">
-            {{ fetchPlanetInfo() }}
             <header class="modal-header">
                 <slot name="header">
-                    {{ planetInfo.name }}
+                    {{ this.$props.planet.name }}
                 </slot>
             </header>
             <section class="modal-body">
                 <slot name="body">
-                    <p>Diameter: {{ printNumber(planetInfo.diameter) }}</p>
-                    <p class="capitalise">Climate: {{ planetInfo.climate }}</p>
-                    <p class="capitalise">Terrain: {{ planetInfo.terrain }}</p>
-                    <p>Population: {{ printNumber(planetInfo.population) }}</p>
+                    <p>Diameter: {{ printNumber(this.$props.planet.diameter) }}</p>
+                    <p class="capitalise">Climate: {{ this.$props.planet.climate }}</p>
+                    <p class="capitalise">Terrain: {{ this.$props.planet.terrain }}</p>
+                    <p>Population: {{ printNumber(this.$props.planet.population) }}</p>
                 </slot>
             </section>
             <footer class="modal-footer">
@@ -23,26 +22,15 @@
 </template>
 
 <script>
-    import axios from 'axios';
 
     export default {
         name: 'MyModal',
-        data() {
-            return { planetInfo: { url: null} }
-        },
         props: {
-            planet: String
+            planet: Object
         },
         methods: {
             close() {
                 this.$emit('close');
-            },
-            fetchPlanetInfo() {
-                if (this.$props.planet != this.planetInfo.url) {
-                    axios.get(this.$props.planet).then(response => {
-                        this.planetInfo = response.data;
-                    })
-                }
             },
             printNumber(number) {
                 if (number != "unknown") {
