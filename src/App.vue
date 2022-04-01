@@ -48,7 +48,8 @@
         },
         data() {
             return { characters: [], textInput: "", currentSort: "created", currentSortDir: "asc",
-                     pageSize: 10, currentPage: 1, isModalVisible: false, planet : "", maxPages: 0 }
+                     pageSize: 10, currentPage: 1, isModalVisible: false, planet : "", maxPages: 0,
+                     planets: {} }
         },
         methods: {
             async fetchCharacters() {
@@ -68,7 +69,7 @@
                         this.fetchCharacters_(nextPage);
                     });
                 } else {
-                    this.fetchPlanet();
+                    this.fetchPlanets();
                 }
             },
             onInput() {
@@ -80,11 +81,16 @@
                 }
                 this.currentSort = column;
             },
-            async fetchPlanet() {
+            async fetchPlanets() {
                 for (let char in this.characters) {
-                    axios.get(this.characters[char].homeworld).then(response => {
-                        this.characters[char].homeworld = [this.characters[char].homeworld, response.data.name];
-                    })
+                    if (this.planets[this.characters[char].homeworld]) {
+                        this.characters[char].homeworld = this.planets[this.characters[char].homeworld];
+                    } else {
+                        axios.get(this.characters[char].homeworld).then(response => {
+                            this.planets[this.characters[char].homeworld] = response.data;
+                            this.characters[char].homeworld = [this.characters[char].homeworld, response.data.name];
+                        })
+                    }
                 }
             },
             nextPage() {
@@ -94,7 +100,7 @@
                 this.currentPage -= 1;
             },
             showModal($event) {
-                this.planet = $event;
+                this.planet = this.planets[$event];
                 this.isModalVisible = true;
             },
             closeModal() {
