@@ -19,15 +19,15 @@
             <CharacterList @showModal="showModal($event)" :textInput="textInput" :characters="sortedTable"></CharacterList>
         </table>
         <p v-if="currentPage === 1">
-            <button @click="nextPage">Next</button>
+            <section @click="nextPage">Next</section>
         </p>
         <p v-else-if="currentPage > maxPages">
-            <button @click="prevPage">Previous</button>
+            <section @click="prevPage">Previous</section>
         </p>
         <p v-else>
-            <button @click="prevPage">Previous</button>
+            <section @click="prevPage">Previous</section>
             | {{ currentPage }} |
-            <button @click="nextPage">Next</button>
+            <section @click="nextPage">Next</section>
         </p>
         <Modal v-show='isModalVisible' @close='closeModal' :planet="planet"/>
     </div>
@@ -192,7 +192,8 @@
         opacity: 0.9;
     }
 
-    button {
+    section {
+        display: inline;
         background-color: transparent;
         border: 0;
         font-weight: bold;

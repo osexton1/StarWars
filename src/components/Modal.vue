@@ -15,7 +15,7 @@
                 </slot>
             </section>
             <footer class="modal-footer">
-                <button @click='close'>Close</button>
+                <section @click='close'>Close</section>
             </footer>
         </div>
     </div>
@@ -56,11 +56,13 @@
     }
 
     .modal {
+        width: 30%;
         box-shadow: 2px 2px 20px 1px;
         background-image: url('../../public/SWBackground.jpeg');
         overflow-x: auto;
         display: flex;
         flex-direction: column;
+        font-size: 1.25em;
     }
 
     .modal-header,
@@ -87,7 +89,7 @@
         padding: 2em 1em;
     }
 
-    button {
+    section {
         background-color: transparent;
         color: #feda4a;
         border: none;
